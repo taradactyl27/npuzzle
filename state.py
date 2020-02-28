@@ -1,14 +1,15 @@
 class State:
-    def __init__(self, initialS):
+    def __init__(self, initialS, depth):
         if initialS:
             self.goalState = [0,1,2,3,4,5,6,7,8]
             self.currentState = list(initialS)
+            self.searchDepth = depth
             self.solved = self.currentState == self.goalState
+            self.cost = self.heuristic()
             if not self.solved:
                 self.zeroLoc = self.currentState.index(0)
                 self.bounds = self.boundaries((self.zeroLoc))
                 self.children = [self.setUp(),self.setDown(),self.setLeft(self.bounds),self.setRight(self.bounds)]
-                self.cost = 100000
     def __key(self):
         return tuple(self.currentState)
     def __hash__(self):
@@ -17,6 +18,14 @@ class State:
         return self.currentState == other.currentState
     def __ne__(self,other):
         return not (self.currentState == other.currentState)
+    def __lt__(self, other):
+        return self.cost < other.cost
+    def __le__(self, other):
+        return self.cost <= other.cost
+    def __gt__(self, other):
+        return self.cost > other.cost
+    def __ge__(self, other):
+        return self.cost >= other.cost
 
     def setUp(self):
         if(self.zeroLoc - 3 >= 0):
@@ -53,7 +62,13 @@ class State:
             return tempS
         else:
             return None
-
+    def heuristic(self):
+        cost = 0
+        for x in range(8):
+            if (self.currentState[x] != x):
+                cost += 1
+        return cost
+        
     def boundaries(self,zeroInd):
         if (zeroInd < 3):
             return [0,2]
