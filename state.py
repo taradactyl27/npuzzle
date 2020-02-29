@@ -1,11 +1,14 @@
 class State:
-    def __init__(self, initialS, depth):
+    def __init__(self, initialS, depth,parentN,moveMade, ast = False):
         if initialS:
             self.goalState = [0,1,2,3,4,5,6,7,8]
+            self.parent = parentN
             self.currentState = list(initialS)
             self.searchDepth = depth
+            self.path = (parentN,moveMade)
             self.solved = self.currentState == self.goalState
-            self.cost = self.heuristic()
+            if ast:
+                self.cost = self.heuristic() + self.searchDepth
             if not self.solved:
                 self.zeroLoc = self.currentState.index(0)
                 self.bounds = self.boundaries((self.zeroLoc))
@@ -65,8 +68,8 @@ class State:
     def heuristic(self):
         cost = 0
         for x in range(8):
-            if (self.currentState[x] != x):
-                cost += 1
+            if (self.currentState[x] != x) and self.currentState[x]!=0:
+                cost += (abs(self.currentState[x]/3-x/3) + abs(self.currentState[x]%3-x%3))
         return cost
         
     def boundaries(self,zeroInd):
