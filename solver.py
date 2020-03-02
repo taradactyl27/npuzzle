@@ -1,6 +1,7 @@
 import math
 import collections
 import state
+import sys
 from queue import PriorityQueue
 
 def breadth_first_search(stateInitial):
@@ -19,11 +20,13 @@ def breadth_first_search(stateInitial):
             while currentS.path[0]:
                 path_to_goal.insert(0,currentS.path[1])
                 currentS.path = currentS.path[0].path
+            sys.stdout = open('output.txt',"w")
             print("path_to_goal:",path_to_goal)
             print("cost_of_path:",currentS.searchDepth)
             print("nodes_expanded:",nodesExpanded)
             print("search_depth:",currentS.searchDepth)
             print("max_search_depth:",max_search_depth)
+            sys.stdout.close()
             return
         nodesExpanded += 1
         moves = ["Up","Down","Left","Right"]
@@ -46,18 +49,20 @@ def depth_first_search(stateInitial):
     max_search_depth = 0
     while(frontier):
         currentS = frontier.pop()
+        max_search_depth = max(max_search_depth,currentS.searchDepth)
         if(currentS.solved):
             path_to_goal = []
             while currentS.path[0]:
                 path_to_goal.insert(0,currentS.path[1])
                 currentS.path = currentS.path[0].path
-            print("path_to_goal:", path_to_goal)
-            print("cost_of_path:", currentS.searchDepth)
+            sys.stdout = open('output.txt',"w")
+            print("path_to_goal:",path_to_goal)
+            print("cost_of_path:",currentS.searchDepth)
             print("nodes_expanded:",nodesExpanded)
             print("search_depth:",currentS.searchDepth)
             print("max_search_depth:",max_search_depth)
+            sys.stdout.close()
             return
-        max_search_depth = max(max_search_depth,currentS.searchDepth)
         nodesExpanded += 1
         moves = ["Up","Down","Left","Right"]
         for i in range(4):
@@ -86,11 +91,13 @@ def a_star_search(stateInitial):
             while currentS.path[0]:
                 path_to_goal.insert(0,currentS.path[1])
                 currentS.path = currentS.path[0].path
-            print("path_to_goal:", path_to_goal)
-            print("cost_of_path:", currentS.searchDepth)
+            sys.stdout = open('output.txt',"w")
+            print("path_to_goal:",path_to_goal)
+            print("cost_of_path:",currentS.searchDepth)
             print("nodes_expanded:",nodesExpanded)
             print("search_depth:",currentS.searchDepth)
             print("max_search_depth:",max_search_depth)
+            sys.stdout.close()
             return
         nodesExpanded += 1
         moves = ["Up","Down","Left","Right"]
