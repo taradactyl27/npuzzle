@@ -5,7 +5,6 @@ import sys
 from queue import PriorityQueue
 
 def breadth_first_search(stateInitial):
-    #TODO Improve data structures
     frontier = collections.deque()
     explored = set()
     initstate = state.State(stateInitial,0,None,None)
@@ -13,6 +12,7 @@ def breadth_first_search(stateInitial):
     explored.add(initstate)
     nodesExpanded = 0
     max_search_depth = 0
+    moves = ["Up","Down","Left","Right"]
     while(frontier):
         currentS = frontier.popleft()
         if(currentS.solved):
@@ -29,7 +29,6 @@ def breadth_first_search(stateInitial):
             sys.stdout.close()
             return
         nodesExpanded += 1
-        moves = ["Up","Down","Left","Right"]
         for i in range(4):
             nextChild = currentS.children[i]
             if(nextChild):
@@ -47,6 +46,7 @@ def depth_first_search(stateInitial):
     explored.add(initstate)
     nodesExpanded = 0
     max_search_depth = 0
+    moves = ["Up","Down","Left","Right"]
     while(frontier):
         currentS = frontier.pop()
         max_search_depth = max(max_search_depth,currentS.searchDepth)
@@ -64,7 +64,6 @@ def depth_first_search(stateInitial):
             sys.stdout.close()
             return
         nodesExpanded += 1
-        moves = ["Up","Down","Left","Right"]
         for i in range(4):
             nextChild = currentS.children[3-i]
             if(nextChild):
@@ -82,9 +81,9 @@ def a_star_search(stateInitial):
     explored.add(initstate)
     nodesExpanded = 0
     max_search_depth = 0
+    moves = ["Up","Down","Left","Right"]
     while(frontier):
         currentS = frontier.get()
-        #print (currentS.currentState," : ", currentS.cost)
         max_search_depth = max(max_search_depth,currentS.searchDepth)
         if(currentS.solved):
             path_to_goal = []
@@ -100,7 +99,6 @@ def a_star_search(stateInitial):
             sys.stdout.close()
             return
         nodesExpanded += 1
-        moves = ["Up","Down","Left","Right"]
         for i in range(4):
             nextChild = currentS.children[i]
             if(nextChild):
