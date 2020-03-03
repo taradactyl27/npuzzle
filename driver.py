@@ -15,6 +15,6 @@ if(searchMethod == "bfs"):
 if(searchMethod == "ast"):
     solver.a_star_search(boardInput)
 sys.stdout = open("output.txt","a")
-print("running_time:" ,time.time() - start_time)
-print("max_ram_usage:",resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1000000)
+print("running_time:" , str.format("{0:.8f}",(time.time() - start_time)))
+print("max_ram_usage:",str.format("{0:.8f}",(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/100000)))
 sys.stdout.close()
